@@ -24,11 +24,11 @@ for i in tqdm(range(repetitions)):
 print("Average (exact  algorithm): ", sum(l_exact)/repetitions)
 
 for r in range(repetitions):
-	if l_S1[r] > l_exact[r] or l_S2[r] > l_exact[r]:
-		print("Fehler", l_S1[r], l_S2[r], l_exact[r], r) # Inplausible values 
-	else:
-		c1[l_exact[r] - l_S1[r]] += 1
-		c2[l_exact[r] - l_S2[r]] += 1
+	assert l_S1[r] <= l_exact[r], "S1 found a larger matching than the exact. This hints at an error in the code"
+	assert l_S2[r] <= l_exact[r], "S2 found a larger matching than the exact. This hints at an error in the code"
+
+	c1[l_exact[r] - l_S1[r]] += 1
+	c2[l_exact[r] - l_S2[r]] += 1
 
 
 print(c1)
