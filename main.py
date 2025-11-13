@@ -5,6 +5,8 @@ from Simulation import *
 from def_variables import * 
 from tqdm import tqdm
 
+random.seed(5142412)
+np.random.seed(412412)
 
 l_S1 = [] 
 l_S2 = []
@@ -31,5 +33,5 @@ for r in range(repetitions):
 	c2[l_exact[r] - l_S2[r]] += 1
 
 
-print(c1)
-print(c2)
+print("Strategy 1", c1)
+print("Strategy 2", c2)
