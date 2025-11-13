@@ -21,7 +21,7 @@ from def_variables import *
 def Simulate_single_repetition():
 
 	# Load graph from file 
-	matr = np.load(graph_file)
+	matr = np.load(def_variables.graph_path)
 	matrix = matr.astype(int)
 	G = nx.from_numpy_array(matrix)
 	
