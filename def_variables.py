@@ -10,7 +10,7 @@ class Params:
 	graph_file = "Ex_A"		# Format: Adjacency matrix with m*N x m*N dimension, nodes without any edges are 
 							# treated as non-existent. This format is important to know to which party a node
 							# belongs (i.e. in case not all parties have the same number of nodes).
-	graph_type = "random"
+	graph_type = "random"   # Either random or neighboring
 	graph_path = "Sample_graphs/" + graph_file + ".npy"
 
 
