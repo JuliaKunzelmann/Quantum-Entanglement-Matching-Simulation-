@@ -50,7 +50,7 @@ def main():
 	G = nx.from_numpy_array(matrix)
 	print(f"Loaded graph from {Params.graph_path}")
 
-
+	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} adn m={Params.m}]"
 	l_S1 = [] 
 	l_S2 = []
 	l_exact = []
