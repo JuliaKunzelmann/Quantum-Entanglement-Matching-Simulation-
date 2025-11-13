@@ -1,5 +1,6 @@
 # Start the simulation
 
+import argparse
 import numpy as np
 from Simulation import * 
 from def_variables import * 
@@ -9,6 +10,15 @@ random.seed(5142412)
 np.random.seed(412412)
 
 def main():
+
+	
+
+	print("Running simulation with parameters:")
+	print(f"N = {N}")
+	print(f"m = {m}")
+	print(f"p = {p}")
+	print(f"repettions = {repetitions}")
+
 	l_S1 = [] 
 	l_S2 = []
 	l_exact = []
