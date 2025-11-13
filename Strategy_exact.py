@@ -27,11 +27,11 @@ def get_exact_l(matr):
 	filled_nodes_per_party.append(filled_nodes_party_A)
 	number_filled_nodes_per_party.append(len(filled_nodes_party_A))
 
-	for party in range (N-1):
+	for party in range (Params.N-1):
 		filled_nodes_P_i_tmp = []
 		for edge in G.edges():
 			node = edge[1]
-			if node >= (party+1)*m and node < (party+2)*m :
+			if node >= (party+1)*Params.m and node < (party+2)*Params.m :
 				if node not in filled_nodes_P_i_tmp:
 					filled_nodes_P_i_tmp.append(node)
 					
@@ -53,15 +53,15 @@ def get_exact_l(matr):
 			if edge[0] == mem:
 				edges_per_memory.append(edge)
 
-		hyperedges = list(itertools.combinations(edges_per_memory, N-1))
+		hyperedges = list(itertools.combinations(edges_per_memory, Params.N-1))
 		
 		# check that all peers have exactly one node in the hyperedge 
 		for hyperedge in hyperedges:
 			check = True
-			party_list = [0] * N 
+			party_list = [0] * Params.N 
 			for idx in range(len(hyperedge)):
 				node_B = hyperedge[idx][1]
-				party = int(node_B/m) 
+				party = int(node_B/Params.m) 
 				if party_list[party] == 0:
 					party_list[party] = 1
 				else:
@@ -87,10 +87,10 @@ def get_exact_l(matr):
 					if node_2 not in nodes:
 						nodes.append(node_2)
 						
-			if len(nodes) == counter*N:
+			if len(nodes) == counter*Params.N:
 				return len(matching_candidate)     
 		
-		counter-= 1
+		counter -= 1
 	return 0
 
 
@@ -101,10 +101,10 @@ def remove_orphaned_nodes(matr):
     delete_nodes = []
     
     # Go through A's nodes 
-    for m_a in range(m):
+    for m_a in range(Params.m):
 		# Go through all peers
-        for party in range(1, N):
-            matr_party = matr[m_a][party*m:(party+1)*m]
+        for party in range(1, Params.N):
+            matr_party = matr[m_a][party*Params.m:(party+1)*Params.m]
 			
 			# Delete all entries in matr to delete remaining edges from note that is to be deleted 
             if matr_party.tolist().count(1) == 0:
@@ -115,17 +115,3 @@ def remove_orphaned_nodes(matr):
 
     return matr        
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-

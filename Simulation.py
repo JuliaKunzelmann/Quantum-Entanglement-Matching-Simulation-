@@ -12,10 +12,10 @@ import statistics as st
 import copy
 from matplotlib.ticker import MaxNLocator
 
-from def_variables import * 
 from Strategy_1 import *
 from Strategy_2 import *
 from Strategy_exact import *
+from def_variables import * 
 
 
 def Simulate_single_repetition():
@@ -26,7 +26,7 @@ def Simulate_single_repetition():
 	G = nx.from_numpy_array(matrix)
 	
 	# "Delete" nodes in G to simulate transition loss (deletion means removing all edges from the node)
-	p_delete = 1 - p
+	p_delete = 1 - Params.p
 	nodes_in_G = []
 	for edge in G.edges(): # Append all nodes which have at least one edge
 		if edge[0] not in nodes_in_G:
@@ -36,11 +36,11 @@ def Simulate_single_repetition():
 	
 	for node in nodes_in_G:
 		if rand() <= p_delete: # Toss a coin if qubit was lost in transition
-			if node < m:
-				for i in range(m_total):
+			if node < Params.m:
+				for i in range(Params.m_total):
 					matr[node][i] = 0
 			else:
-				for i in range(m):
+				for i in range(Params.m):
 					matr[i][node] = 0
 	
 	# Update graph from modified matrix
@@ -77,11 +77,11 @@ def get_upper_bound(G):
 	filled_nodes_per_party.append(filled_nodes_party_A)
 	number_filled_nodes_per_party.append(len(filled_nodes_party_A))
 
-	for party in range (N-1):
+	for party in range (Params.N-1):
 		filled_nodes_B_tmp = []
 		for edge in G.edges():
 			node = edge[1]
-			if node >= (party+1)*m and node < (party+2)*m :
+			if node >= (party+1)*Params.m and node < (party+2)*Params.m :
 				if node not in filled_nodes_B_tmp:
 					filled_nodes_B_tmp.append(node)
 					
@@ -91,18 +91,3 @@ def get_upper_bound(G):
 	
 	return min(number_filled_nodes_per_party)
 
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-  
-    

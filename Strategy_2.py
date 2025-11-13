@@ -17,14 +17,14 @@ def Strategy_2(matr):
 
 	# Select edges at random
 	for m_a in filled_nodes_a:
-		for party in range(1, N):
+		for party in range(1, Params.N):
 			idx = []
-			matr_party = matr[m_a][party*m:(party+1)*m]
+			matr_party = matr[m_a][party*Params.m:(party+1)*Params.m]
 			
 			# Check that no other row has connection to the same m_P, otherwise delete connection and nodes
 			if matr_party.tolist().count(1) == 1:
 				tmp = matr_party.tolist().index(1)
-				m_P = party*m + tmp
+				m_P = party*Params.m + tmp
 				for i in filled_nodes_a:
 					if i != m_a:
 						matr[i][m_P] = 0
@@ -32,13 +32,13 @@ def Strategy_2(matr):
 
 			# Choose random connection from all possible ones 
 			elif matr_party.tolist().count(1) > 1: 
-				for j in range(m):
+				for j in range(Params.m):
 					if matr_party[j] == 1:
 						idx.append(j)
 				
 				# Get chosen node m_P
 				tmp = random.choice(idx)
-				m_P = party*m + tmp
+				m_P = party*Params.m + tmp
 				
 				# Delete all other edges to the peer's node 
 				for i in filled_nodes_a:
@@ -46,7 +46,7 @@ def Strategy_2(matr):
 						matr[i][m_P] = 0
 
 				# Delete all other edges from the center's node
-				for i in range(m):
+				for i in range(Params.m):
 					if i != tmp:
 						matr_party[i] = 0
 				filled_nodes_a, matr = remove_orphaned_nodes(filled_nodes_a, matr)
@@ -55,7 +55,7 @@ def Strategy_2(matr):
 		return matr, len(filled_nodes_a)
 
 	else:
-		raise Exception("PROBELM S2!!!")
+		raise Exception("PROBLEM S2!!!")
 
 
 
