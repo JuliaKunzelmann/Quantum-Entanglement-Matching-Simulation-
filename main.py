@@ -1,10 +1,12 @@
 # Start the simulation
 
+import os
 import argparse
 import numpy as np
 from Simulation import * 
 from tqdm import tqdm
 from def_variables import *
+from Generate_Sample_Graphs import create_graph
 
 random.seed(5142412)
 np.random.seed(412412)
@@ -34,7 +36,20 @@ def main():
 	print(f"m = {Params.m}")
 	print(f"p = {Params.p}")
 	print(f"repetitions = {Params.repetitions}")
-	print(f"Graph file: {Params.graph_file}")
+	#print(f"Graph file: {Params.graph_file}")
+
+	G = None
+	if not os.path.exists(Params.graph_path):
+		print("Did not find graph, creating new")
+		# Create graph
+		create_graph()
+
+	# Load graph from file 
+	matr = np.load(Params.graph_path)
+	matrix = matr.astype(int)
+	G = nx.from_numpy_array(matrix)
+	print(f"Loaded graph from {Params.graph_path}")
+
 
 	l_S1 = [] 
 	l_S2 = []
@@ -45,7 +60,7 @@ def main():
 	c2 = [0]*(Params.m+1)
 
 	for i in tqdm(range(Params.repetitions)):
-		l_1, l_2, l_opt = Simulate_single_repetition()
+		l_1, l_2, l_opt = Simulate_single_repetition(matr, G)
 		l_S1.append(l_1)
 		l_S2.append(l_2)
 		l_exact.append(l_opt)

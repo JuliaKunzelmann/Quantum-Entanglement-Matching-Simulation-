@@ -18,12 +18,8 @@ from Strategy_exact import *
 from def_variables import Params 
 
 
-def Simulate_single_repetition():
+def Simulate_single_repetition(matr, G):
 
-	# Load graph from file 
-	matr = np.load(Params.graph_path)
-	matrix = matr.astype(int)
-	G = nx.from_numpy_array(matrix)
 	
 	# "Delete" nodes in G to simulate transition loss (deletion means removing all edges from the node)
 	p_delete = 1 - Params.p
