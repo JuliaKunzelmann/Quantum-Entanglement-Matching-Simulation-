@@ -23,7 +23,7 @@ for i in tqdm(range(repetitions)):
 	l_exact.append(l_opt)
 
 # Get average cardinality over all repetitions of exact matching 
-print("Average (exact  algorithm): ", sum(l_exact)/repetitions)
+print("Average cardinality (exact algorithm): ", sum(l_exact)/repetitions)
 
 for r in range(repetitions):
 	assert l_S1[r] <= l_exact[r], "S1 found a larger matching than the exact. This hints at an error in the code"
@@ -32,6 +32,6 @@ for r in range(repetitions):
 	c1[l_exact[r] - l_S1[r]] += 1
 	c2[l_exact[r] - l_S2[r]] += 1
 
-
+print("Histograms of difference between exact and heuristic matching cardinality:")
 print("Strategy 1", c1)
 print("Strategy 2", c2)
