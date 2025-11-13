@@ -3,7 +3,7 @@
 import numpy as np
 from Simulation import * 
 from def_variables import * 
-
+from tqdm import tqdm
 
 
 l_S1 = [] 
@@ -14,13 +14,11 @@ l_exact = []
 c1 = [0]*(m+1)
 c2 = [0]*(m+1)
 
-for i in range(repetitions):
-	print(str(int((i/repetitions)*100)) + "%", end="\r")
+for i in tqdm(range(repetitions)):
 	l_1, l_2, l_opt = Simulate_single_repetition()
 	l_S1.append(l_1)
 	l_S2.append(l_2)
 	l_exact.append(l_opt)
-print()
 
 # Get average cardinality over all repetitions of exact matching 
 print("Average (exact  algorithm): ", sum(l_exact)/repetitions)
