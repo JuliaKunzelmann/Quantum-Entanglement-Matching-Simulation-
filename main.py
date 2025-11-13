@@ -15,6 +15,7 @@ def main():
 	parser.add_argument("--m", type=int, default=Params.m)
 	parser.add_argument("--p", type=float, default=Params.p)
 	parser.add_argument("--reps", type=int, default=Params.repetitions)
+	parser.add_argument("--graph-file", type=str, default=Params.graph_file)
 	args = parser.parse_args()
 
 	Params.N = args.N
@@ -22,12 +23,16 @@ def main():
 	Params.m_total = Params.N * Params.m
 	Params.p = args.p
 	Params.repetitions = args.reps
+	Params.graph_file = args.graph_file
+	Params.graph_path = "Sample_graphs/" + Params.graph_file + ".npy"
+
 
 	print("Running simulation with parameters:")
 	print(f"N = {Params.N}")
 	print(f"m = {Params.m}")
 	print(f"p = {Params.p}")
 	print(f"repetitions = {Params.repetitions}")
+	print(f"Graph file: {Params.graph_file}")
 
 	l_S1 = [] 
 	l_S2 = []

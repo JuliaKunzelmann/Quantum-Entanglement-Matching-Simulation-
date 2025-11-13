@@ -15,13 +15,13 @@ from matplotlib.ticker import MaxNLocator
 from Strategy_1 import *
 from Strategy_2 import *
 from Strategy_exact import *
-from def_variables import * 
+from def_variables import Params 
 
 
 def Simulate_single_repetition():
 
 	# Load graph from file 
-	matr = np.load(def_variables.graph_path)
+	matr = np.load(Params.graph_path)
 	matrix = matr.astype(int)
 	G = nx.from_numpy_array(matrix)
 	

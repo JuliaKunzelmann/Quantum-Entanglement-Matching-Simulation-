@@ -5,7 +5,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-from def_variables import *
+from def_variables import Params
 
 parties = Params.N
 memories_per_party = Params.m
@@ -38,7 +38,7 @@ for i in range(1, parties):
 nx.draw(G1, pos=pos, with_labels=True)
 plt.show()
 array = nx.to_numpy_array(G1)
-np.save(def_variables.graph_path, array)
+np.save(Params.graph_path, array)
 
 # Random connections
 G2 = nx.DiGraph()
@@ -53,4 +53,4 @@ for i in range(1, parties):
 nx.draw(G2, pos=pos, with_labels=True)
 plt.show()
 array = nx.to_numpy_array(G2)
-np.save(def_variables.graph_path, array)
+np.save(Params.graph_path, array)
