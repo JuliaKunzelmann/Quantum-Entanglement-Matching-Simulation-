@@ -60,7 +60,7 @@ def main():
 	c2 = [0]*(Params.m+1)
 
 	for i in tqdm(range(Params.repetitions)):
-		l_1, l_2, l_opt = Simulate_single_repetition(matr, G)
+		l_1, l_2, l_opt = Simulate_single_repetition(matr.copy(), G)
 		l_S1.append(l_1)
 		l_S2.append(l_2)
 		l_exact.append(l_opt)
