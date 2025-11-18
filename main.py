@@ -15,7 +15,7 @@ def main():
 	parser = argparse.ArgumentParser(description="Override simulation parameters.")
 	parser.add_argument("--N", type=int, default=Params.N)
 	parser.add_argument("--m", type=int, default=Params.m)
-	parser.add_argument("--p", type=float, default=Params.p)
+	parser.add_argument("--p-del", type=float, default=Params.p_del)
 	parser.add_argument("--reps", type=int, default=Params.repetitions)
 	parser.add_argument("--graph-file", type=str, default=Params.graph_file)
 	parser.add_argument("--graph-type", type=str, default=Params.graph_type)
@@ -25,7 +25,7 @@ def main():
 	Params.N = args.N
 	Params.m = args.m
 	Params.m_total = Params.N * Params.m
-	Params.p = args.p
+	Params.p_del = args.p_del
 	Params.repetitions = args.reps
 	Params.graph_file = args.graph_file
 	Params.graph_path = "Sample_graphs/" + Params.graph_file + ".npy"
@@ -34,7 +34,7 @@ def main():
 	print("Running simulation with parameters:")
 	print(f"N = {Params.N}")
 	print(f"m = {Params.m}")
-	print(f"p = {Params.p}")
+	print(f"p-del = {Params.p_del}")
 	print(f"repetitions = {Params.repetitions}")
 	#print(f"Graph file: {Params.graph_file}")
 

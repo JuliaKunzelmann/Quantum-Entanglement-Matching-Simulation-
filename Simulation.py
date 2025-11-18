@@ -22,7 +22,7 @@ def Simulate_single_repetition(matr, G):
 
 	
 	# "Delete" nodes in G to simulate transition loss (deletion means removing all edges from the node)
-	p_delete = 1 - Params.p
+	p_delete = Params.p_del
 	nodes_in_G = []
 	for edge in G.edges(): # Append all nodes which have at least one edge
 		if edge[0] not in nodes_in_G:
