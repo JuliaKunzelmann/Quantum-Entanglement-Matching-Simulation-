@@ -7,10 +7,16 @@ from Simulation import *
 from tqdm import tqdm
 from def_variables import *
 from Generate_Sample_Graphs import create_graph
+from multiprocessing import Pool
+from functools import partial
 
-random.seed(5142412)
-np.random.seed(412412)
+SEED = 1278412
 
+def run_simulation(seed, matr, G):
+		random.seed(int(seed))
+		np.random.seed(int(seed))
+		return Simulate_single_repetition(matr, G)
+		
 def main():
 	parser = argparse.ArgumentParser(description="Override simulation parameters.")
 	parser.add_argument("--N", type=int, default=Params.N)
@@ -51,22 +57,34 @@ def main():
 	print(f"Loaded graph from {Params.graph_path}")
 
 	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} adn m={Params.m}]"
+	
+	# Result containers
 	l_S1 = [] 
 	l_S2 = []
 	l_exact = []
 
+	# Produce seeds for all simultion runs
+	rng_master = np.random.default_rng(SEED)
+	child_seeds = rng_master.integers(0, 2**32 - 1, size=Params.repetitions)
+
+
+	# parallelize simulation runs
+
+	# pass same matr and G to all simulations
+	worker = partial(run_simulation, matr=matr, G=G)
+	num_workers = None
+	with Pool(processes=num_workers) as pool:
+		for l_1, l_2, l_opt in tqdm(pool.imap_unordered(worker, child_seeds), total=Params.repetitions):
+			l_S1.append(l_1)
+			l_S2.append(l_2)
+			l_exact.append(l_opt)
+		
+	# Get average cardinality over all repetitions of exact matching 
+	print("Average cardinality (exact algorithm): ", sum(l_exact)/Params.repetitions)
+
 	# Prepare histogram
 	c1 = [0]*(Params.m+1)
 	c2 = [0]*(Params.m+1)
-
-	for i in tqdm(range(Params.repetitions)):
-		l_1, l_2, l_opt = Simulate_single_repetition(matr.copy(), G)
-		l_S1.append(l_1)
-		l_S2.append(l_2)
-		l_exact.append(l_opt)
-
-	# Get average cardinality over all repetitions of exact matching 
-	print("Average cardinality (exact algorithm): ", sum(l_exact)/Params.repetitions)
 
 	for r in range(Params.repetitions):
 		assert l_S1[r] <= l_exact[r], "S1 found a larger matching than the exact. This hints at an error in the code"
