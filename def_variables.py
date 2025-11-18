@@ -12,6 +12,7 @@ class Params:
 							# belongs (i.e. in case not all parties have the same number of nodes).
 	graph_type = "random"   # Either random or neighboring
 	graph_path = "Sample_graphs/" + graph_file + ".npy"
+	num_workers = None      # Number of cores used for simulation runs
 
 
 

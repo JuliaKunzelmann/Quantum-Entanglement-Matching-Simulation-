@@ -26,6 +26,8 @@ The following command line options exist:
 --reps 			(Number of iterations for the simulation, default 1000)
 --graph-file 	(File where the graph instance is located, default Ex_A)
 --graph-type	(Whether to create a 'random' or 'neighboring' graph, default "random")
+--num-workers   (How many cores to use for parallelizing the simulation)
+
 
 A new graph instance is only created when there is no instance found at the passed graph-file. When using an existing graph instance, make sure to pass the correct values for N and m of that graph.
 

@@ -25,6 +25,7 @@ def main():
 	parser.add_argument("--reps", type=int, default=Params.repetitions)
 	parser.add_argument("--graph-file", type=str, default=Params.graph_file)
 	parser.add_argument("--graph-type", type=str, default=Params.graph_type)
+	parser.add_argument("--num-workers", type=int, default=Params.num_workers)
 	args = parser.parse_args()
 
 
@@ -36,6 +37,7 @@ def main():
 	Params.graph_file = args.graph_file
 	Params.graph_path = "Sample_graphs/" + Params.graph_file + ".npy"
 	Params.graph_type = args.graph_type
+	Params.num_workers = args.num_workers
 
 	print("Running simulation with parameters:")
 	print(f"N = {Params.N}")
@@ -69,11 +71,12 @@ def main():
 
 
 	# parallelize simulation runs
+	print(f"Using {"all available" if Params.num_workers is None else str(Params.num_workers)} cores")
 
 	# pass same matr and G to all simulations
 	worker = partial(run_simulation, matr=matr, G=G)
-	num_workers = None
-	with Pool(processes=num_workers) as pool:
+	
+	with Pool(processes=Params.num_workers) as pool:
 		for l_1, l_2, l_opt in tqdm(pool.imap_unordered(worker, child_seeds), total=Params.repetitions):
 			l_S1.append(l_1)
 			l_S2.append(l_2)
