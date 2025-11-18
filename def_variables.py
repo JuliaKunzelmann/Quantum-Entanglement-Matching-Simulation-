@@ -5,7 +5,7 @@ class Params:
 	N = 4  			# Number of parties
 	m = 5    		# Number of memories
 	m_total = N*m   # Total number of memories
-	p_del = 0.7  		# Probability of loss in quantum channel
+	p_del = 0.3  		# Probability of loss in quantum channel
 	repetitions = 10000  	# Number of samples 
 	graph_file = "Ex_A"		# Format: Adjacency matrix with m*N x m*N dimension, nodes without any edges are 
 							# treated as non-existent. This format is important to know to which party a node

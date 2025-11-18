@@ -22,7 +22,7 @@ The following command line options exist:
 
 --N    			(Number of parties, default 4)
 --m    			(Number of memories per party, default 5)
---p    			(Qubit transmission probability, default 0.7)
+--p-del   		(Qubit deletion probability, default 0.3)
 --reps 			(Number of iterations for the simulation, default 1000)
 --graph-file 	(File where the graph instance is located, default Ex_A)
 --graph-type	(Whether to create a 'random' or 'neighboring' graph, default "random")
