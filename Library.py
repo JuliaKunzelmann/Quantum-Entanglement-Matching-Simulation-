@@ -8,7 +8,7 @@ from def_variables import *
 def get_m_a(matr):
     filled_nodes_a = []
     # Iterate over A's nodes and check for any edge to P_i
-    for m_a in range(m):
+    for m_a in range(Params.m):
         edges_to_p_i = matr[m_a].tolist().count(1)
         if edges_to_p_i > 0:
             filled_nodes_a.append(m_a)
@@ -20,7 +20,7 @@ def get_m_a(matr):
 def get_m_P_i(matr):
 	filled_nodes_P_i = []
 	# Check all memories of the peer nodes
-	for m_i in range(m, m_total):
+	for m_i in range(Params.m, Params.m_total):
 		edges_to_a = (matr[m_i]).tolist().count(1)
 		if edges_to_a > 0:
 			filled_nodes_P_i.append(m_i)
@@ -40,8 +40,8 @@ def remove_orphaned_nodes(filled_nodes_a, matr):
     # Go through A's nodes 
     for m_a in filled_nodes_a:
 		# Go through all peers
-        for party in range(1, N):
-            matr_party = matr[m_a][party*m:(party+1)*m]
+        for party in range(1, Params.N):
+            matr_party = matr[m_a][party*Params.m:(party+1)*Params.m]
 			# Delete all entries in matr to delete remaining edges from note that is to be deleted 
             if matr_party.tolist().count(1) == 0:
                 matr[m_a] = [0 if x==1 else x for x in matr[m_a]]
@@ -60,8 +60,8 @@ def check_for_matching(matr, filled_nodes_a):
 	
 	check = True
 	for m_a in filled_nodes_a:
-		for party in range(1, N):
-			matr_party = matr[m_a][party*m:(party+1)*m]
+		for party in range(1, Params.N):
+			matr_party = matr[m_a][party*Params.m:(party+1)*Params.m]
 			if matr_party.tolist().count(1) != 1: 
 				check = False
 				break
