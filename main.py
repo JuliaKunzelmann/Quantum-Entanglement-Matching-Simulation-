@@ -58,7 +58,7 @@ def main():
 	G = nx.from_numpy_array(matrix)
 	print(f"Loaded graph from {Params.graph_path}")
 
-	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} adn m={Params.m}]"
+	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} and m={Params.m}]"
 	
 	# Result containers
 	l_S1 = [] 
@@ -67,7 +67,7 @@ def main():
 	rs_1 = []
 	rs_2 = []
 
-	# Produce seeds for all simultion runs
+	# Produce seeds for all simulation runs
 	rng_master = np.random.default_rng(SEED)
 	child_seeds = rng_master.integers(0, 2**32 - 1, size=Params.repetitions)
 
