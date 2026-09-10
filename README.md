@@ -1,5 +1,6 @@
-# Quantum-Entanglement-Matching-Simulation-
-Supplementary material for our work 'Opening the Black Box of Quantum Entanglement Matching'
+# Quantum-Entanglement-Matching-Simulation
+Supplementary material for our work 'The Complexity of Matching in Multipartite
+Quantum Routers'
 
 # Installation
 '''
