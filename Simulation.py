@@ -1,6 +1,6 @@
 # Runs a single simulation (randomly determine which memories are filled and find matching using all three strategies)
 
-
+import time
 import numpy as np 
 import math 
 from numpy.random import rand
@@ -16,6 +16,17 @@ from Strategy_1 import *
 from Strategy_2 import *
 from Strategy_exact import *
 from def_variables import Params 
+
+timer = time.thread_time
+
+
+def measure_runtime(func):  
+    start = timer()
+    try:
+        result = func()
+    finally:
+        end = timer()
+    return result, end - start
 
 
 def Simulate_single_repetition(matr, G):
@@ -46,8 +57,14 @@ def Simulate_single_repetition(matr, G):
 	# Find matching using strategy 1 and strategy 2
 	matr_copy = copy.deepcopy(matr) # Copy because subroutines modify matrix
 	matrix_copy = matr_copy.astype(int)
-	matr_1, l_S1 = Strategy_1(matr) # Strategy 1
-	matr_2, l_S2 = Strategy_2(matr_copy) # Strategy 2
+
+	# Strategy 1
+	result_1, runtime_1 = measure_runtime(lambda: Strategy_1(matr))
+	matr_1, l_S1 = result_1
+
+	# Strategy 2
+	result_2, runtime_2 = measure_runtime(lambda: Strategy_2(matr_copy))
+	matr_2, l_S2 = result_2
 	
 	# Find optimal matching
 	l_bound = get_upper_bound(G)
@@ -57,7 +74,7 @@ def Simulate_single_repetition(matr, G):
 		l_opt = get_exact_l(matrix) # Otherwise: Exact algorithm
 
 	# Return cardinalities of matchings found by strategy 1, strategy 2, and exact algorithm 
-	return l_S1, l_S2, l_opt 
+	return l_S1, l_S2, l_opt, runtime_1, runtime_2
 
 # Minimum over filled nodes per party as upper bound for cardinality     
 def get_upper_bound(G):
