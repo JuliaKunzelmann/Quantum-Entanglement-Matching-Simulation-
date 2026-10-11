@@ -58,14 +58,16 @@ def main():
 	G = nx.from_numpy_array(matrix)
 	print(f"Loaded graph from {Params.graph_path}")
 
-	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} adn m={Params.m}]"
+	assert matr.shape == (Params.m_total, Params.m_total), f"Loaded graph does not match passed arguments N={Params.N} and m={Params.m}]"
 	
 	# Result containers
 	l_S1 = [] 
 	l_S2 = []
 	l_exact = []
+	rs_1 = []
+	rs_2 = []
 
-	# Produce seeds for all simultion runs
+	# Produce seeds for all simulation runs
 	rng_master = np.random.default_rng(SEED)
 	child_seeds = rng_master.integers(0, 2**32 - 1, size=Params.repetitions)
 
@@ -77,10 +79,12 @@ def main():
 	worker = partial(run_simulation, matr=matr, G=G)
 	
 	with Pool(processes=Params.num_workers) as pool:
-		for l_1, l_2, l_opt in tqdm(pool.imap_unordered(worker, child_seeds), total=Params.repetitions):
+		for l_1, l_2, l_opt, r_1, r_2 in tqdm(pool.imap_unordered(worker, child_seeds), total=Params.repetitions):
 			l_S1.append(l_1)
 			l_S2.append(l_2)
 			l_exact.append(l_opt)
+			rs_1.append(r_1)
+			rs_2.append(r_2)
 		
 	# Get average cardinality over all repetitions of exact matching 
 	print("Average cardinality (exact algorithm): ", sum(l_exact)/Params.repetitions)
@@ -99,6 +103,15 @@ def main():
 	print("Histograms of difference between exact and heuristic matching cardinality:")
 	print("Strategy 1", c1)
 	print("Strategy 2", c2)
+
+
+	rs_1 = np.array(rs_1)
+	rs_2 = np.array(rs_2)
+
+	print("\nRuntimes:")
+	print(f"Strategy 1: Mean {rs_1.mean():.2e}s, Std {rs_1.std():.2e}s, Max {rs_1.max():.2e}s, {(rs_1 < 1e-3).mean()*100}% faster than 0.001s")
+	print(f"Strategy 2: Mean {rs_2.mean():.2e}s, Std {rs_2.std():.2e}s, Max {rs_2.max():.2e}s, {(rs_2 < 1e-3).mean()*100}% faster than 0.001s")
+
 
 if __name__ == "__main__":
 	main()
