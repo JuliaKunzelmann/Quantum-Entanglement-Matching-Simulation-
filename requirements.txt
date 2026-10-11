@@ -3,3 +3,5 @@ matplotlib
 networkx
 sympy
 tqdm
+scipy
+pandas
