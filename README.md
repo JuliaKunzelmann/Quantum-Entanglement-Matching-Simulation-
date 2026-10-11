@@ -33,3 +33,28 @@ A new graph instance is only created when there is no instance found at the pass
 For example, to create a random graph with N=3 and m=7 and run the simulation, call
 `python main.py --N=3 --m=7 --graph-file="graphName" --graph-type="random"
 `
+
+
+
+Basic usage for Large-scale simulations is `python Run_Simulations.py`
+
+The simulations consider
+
+- N = 10, 20, 30, 40, 50 parties
+- m = 10, 15, 20 memories per party
+- rho = 0.2, 0.3, 0.4 for the sparse topologies
+- p_del = 0, 0.05, 0.1, 0.2
+- 10 independent base graphs and 5 realizations per base graph
+
+The following router topologies are considered:
+
+- Sparse Random
+- Power-Law Center-Degree
+- Fully Connected
+
+The results are written to `Results_extended/results_large_N50_final.csv`
+
+To analyze the results and generate the figures, run `python Results_extended/Analyze_Results.py`
+
+The generated summaries and figures are stored in `Results_extended`.
+`
