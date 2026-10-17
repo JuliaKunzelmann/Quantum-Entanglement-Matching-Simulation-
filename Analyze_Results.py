@@ -370,7 +370,7 @@ def save_parameter_coverage(df, output_dir):
 
 def create_certified_quality_summary(df, output_dir):
     data = df[
-        df["graph_type"].isin(SPARSE_TOPOLOGIES)
+        df["graph_type"].isin(ALL_TOPOLOGIES)
         & (df["LP_upper_bound"] > TOL)
     ].copy()
 
@@ -647,14 +647,20 @@ def save_figure(fig, output_dir, name):
 
 
 def plot_certified_quality(summary, output_dir):
+    figure_topologies = (
+        "sparse_random",
+        "power_law",
+        "fully_connected",
+    )
+
     fig, axes = plt.subplots(
         1,
-        2,
-        figsize=(10, 4.2),
+        3,
+        figsize=(13.2, 4.2),
         sharey=True,
     )
 
-    for ax, graph_type in zip(axes, SPARSE_TOPOLOGIES):
+    for ax, graph_type in zip(axes, figure_topologies):
         sub = summary[summary["graph_type"] == graph_type]
 
         for strategy in ("S1", "S2"):
@@ -669,20 +675,48 @@ def plot_certified_quality(summary, output_dir):
                 label=strategy,
             )
 
-        ax.set_title(TOPOLOGY_LABELS[graph_type])
-        ax.set_xlabel(r"Number of parties $N$")
+        if graph_type == "fully_connected":
+            ax.set_title("Fully Connected")
+
+            ax.text(
+                0.5,
+                0.86,
+                r"$S_1=S_2=\mathrm{LP}$",
+                transform=ax.transAxes,
+                ha="center",
+                va="center",
+                fontsize=10,
+            )
+        else:
+            ax.set_title(
+                TOPOLOGY_LABELS[graph_type]
+            )
+
+        ax.set_xlabel(
+            r"Number of parties $N$"
+        )
+
         ax.set_xticks(N_VALUES)
-        ax.set_ylim(0.0, 1.05)
-        ax.grid(alpha=0.25)
+
+        ax.set_ylim(
+            0.0,
+            1.05
+        )
+
+        ax.grid(
+            alpha=0.25
+        )
 
     axes[0].set_ylabel(
         r"Certified quality lower bound $S/\mathrm{LP}$"
     )
-    axes[1].legend()
+
+    axes[-1].legend()
 
     fig.suptitle(
         rf"Certified heuristic quality at $m={MAIN_QUALITY_M}$"
     )
+
     fig.tight_layout()
 
     save_figure(
